@@ -1,0 +1,12 @@
+{
+  "name": "ghost",
+  "version": "1.0.0",
+  "description": "A plugin nobody listed.",
+  "author": {
+    "name": "x"
+  },
+  "license": "MIT",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}
