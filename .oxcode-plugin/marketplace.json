@@ -1,0 +1,24 @@
+{
+  "name": "oxcode-skills",
+  "description": "Skills for OxCode, maintained by Oxlo.ai and open to contributions.",
+  "owner": {
+    "name": "Oxlo.ai",
+    "url": "https://oxcode.oxlo.ai"
+  },
+  "plugins": [
+    {
+      "name": "code-review",
+      "description": "Review a change for defects that would reach a user, with a reproducing input for every one.",
+      "category": "development",
+      "author": "Oxlo.ai",
+      "source": "./skills/code-review"
+    },
+    {
+      "name": "ui-review",
+      "description": "Review an interface for what a user would actually hit: contrast, focus, overflow, empty and error states.",
+      "category": "design",
+      "author": "Oxlo.ai",
+      "source": "./skills/ui-review"
+    }
+  ]
+}
