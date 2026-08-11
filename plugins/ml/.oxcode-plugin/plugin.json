@@ -1,0 +1,13 @@
+{
+  "name": "ml",
+  "version": "1.0.0",
+  "description": "The seven-stage machine learning pipeline, one skill per stage.",
+  "author": {
+    "name": "Oxlo.ai"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Cyborg-Network/oxcode-skills",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}

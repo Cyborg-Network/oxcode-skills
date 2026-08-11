@@ -1,0 +1,13 @@
+{
+  "name": "code-review",
+  "version": "1.0.0",
+  "description": "Review a change for defects that would reach a user, with a reproducing input for every one.",
+  "author": {
+    "name": "Oxlo.ai"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Cyborg-Network/oxcode-skills",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}

@@ -1,7 +1,31 @@
 # Contributing a skill
 
-One pull request, one skill folder. That keeps review fast and lets us take
-yours without waiting on anything else in the same branch.
+One pull request, one plugin. That keeps review fast and lets us take yours
+without waiting on anything else in the same branch.
+
+## What review means here
+
+Read this part first, because it is what makes this repository different from a
+docs repository.
+
+A skill is a system prompt that runs on someone else's machine with file and
+command tools. So **a pull request here is a security review, not a docs
+review**, and these are what a reviewer checks:
+
+- **The body instructs rather than describes.** A skill that restates the docs
+  changes no answer and costs tokens on every request.
+- **Nothing needs a secret.** If it only works with your API key, it is not a
+  skill.
+- **No model or provider is named anywhere.** Model ids change under us and a
+  skill naming one goes stale for everybody at once. Use `capability` and let
+  OxCode route. CI rejects this, so you will see it before we do.
+- **The skill does not try to widen its own tools.** `tools` is a request that
+  gets clamped to whatever the session already allows. It is never a grant.
+- **No `oxcode:final-override` block.** An installed skill never receives that
+  slot, so writing one ships something that silently does nothing. CI rejects it.
+
+Expect questions. We would rather ask than merge something that adds tokens to
+every request and nothing to any answer.
 
 ## What we are looking for
 
@@ -24,26 +48,50 @@ payments work.
 - **Generic advice.** If it reads like it could apply to any task, it will not
   change any answer. "Follow best practices", "write clean code", "consider edge
   cases" cost tokens on every request and buy nothing.
-- **A model or provider named anywhere.** Model ids change under us and a skill
-  that names one goes stale for everybody at once. Use `capability` and let
-  OxCode route. A `model:` key is rejected by the parser, not ignored.
 - **A restatement of the docs.** Link the docs. Put the things the docs get
   wrong or bury in the skill.
-- **Anything that needs a secret.** Skills are prompts. If it only works with
-  your API key, it is not a skill.
+- Anything failing the review checks above.
 
-## Writing it
+## The layout
+
+The installable unit is a **plugin**. A plugin is a directory that may carry
+several skills, which is why the ML pipeline ships as one plugin with seven.
+
+```
+plugins/
+  your-plugin/
+    .oxcode-plugin/
+      plugin.json
+    skills/
+      your-skill/
+        SKILL.md
+```
 
 Start from [`template/SKILL.md`](template/SKILL.md).
 
-```
-skills/
-  your-skill/
-    SKILL.md
+The skill's directory name is its id and should match `name` in the frontmatter.
+Lowercase with hyphens. A plugin carrying one skill usually gives them the same
+name.
+
+`plugin.json`:
+
+```json
+{
+  "name": "your-plugin",
+  "version": "1.0.0",
+  "description": "Same one line as the marketplace entry.",
+  "author": { "name": "Your name or handle" },
+  "license": "MIT",
+  "requires": { "oxcode": ">=0.4.0" }
+}
 ```
 
-The folder name is the skill's id and should match `name` in the frontmatter.
-Use lowercase with hyphens.
+`requires.oxcode` is the lowest version your plugin works on. Leave it at
+`>=0.4.0` unless you use something newer, and raise it if you do: a user on an
+older extension is then told what they need instead of installing something that
+half works.
+
+## Writing it
 
 **Write the description as a trigger.** It is what the model reads to know your
 skill exists, and it is the one line a person reads in the picker. Say what it
@@ -64,11 +112,11 @@ following it.
 
 ## Testing it before you open the PR
 
-You do not need to install anything or wait for us. Copy your folder into your
-own skills directory:
+You do not need to install anything or wait for us. Copy the skill into your own
+skills directory:
 
 ```bash
-cp -r skills/your-skill ~/.oxcode/skills/
+cp -r plugins/your-plugin/skills/your-skill ~/.oxcode/skills/
 ```
 
 OxCode picks it up on save. Type `/your-skill` and give it a real task. If the
@@ -85,13 +133,16 @@ Add your entry to `.oxcode-plugin/marketplace.json`:
 
 ```json
 {
-  "name": "your-skill",
-  "description": "Same one line as the frontmatter",
+  "name": "your-plugin",
+  "description": "Same one line as the manifest",
   "category": "development",
   "author": "Your name or handle",
-  "source": "./skills/your-skill"
+  "source": "./plugins/your-plugin"
 }
 ```
+
+CI checks that every plugin on disk is listed and every listing exists, so a
+missing entry fails before a human looks at it.
 
 In the description, tell us:
 
@@ -99,10 +150,3 @@ In the description, tell us:
 - What you deliberately left out, and why.
 
 That second one is the part we read first. It tells us you drew a boundary.
-
-## Review
-
-We review for whether the skill changes an answer, and for whether its
-instructions are specific enough to follow. Expect questions about anything
-that reads as general advice. We would rather ask than merge something that
-adds tokens to every request and nothing to any answer.
