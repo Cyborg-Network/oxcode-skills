@@ -1,0 +1,87 @@
+name: skills
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # An installed skill never receives the final-override slot: it is the one
+      # position from which a prompt can overrule a shared safety rule, and a
+      # downloaded file does not get it. So a contributor who writes one has
+      # written something that silently does nothing. Better to learn that from
+      # a failing check than from a skill that quietly has no effect.
+      - name: No override blocks, which an installed skill never receives
+        run: |
+          if grep -rl "oxcode:final-override" plugins/ ; then
+            echo "::error::An installed skill cannot use the final-override slot."
+            echo "::error::It is ignored at load, so this block would do nothing. Remove it."
+            exit 1
+          fi
+
+      # Model ids change under us and a skill that names one goes stale for
+      # everybody at once. capability is the field to use; OxCode routes.
+      - name: No model or provider named
+        run: |
+          if grep -rniE "^model:|\bkimi\b|\bdeepseek\b|\bgpt-[0-9]|\bclaude-|\bgemini\b" plugins/ --include=SKILL.md ; then
+            echo "::error::A skill must not name a model or provider. Use capability."
+            exit 1
+          fi
+
+      - name: Every plugin declares a manifest, and it parses
+        run: |
+          fail=0
+          for d in plugins/*/ ; do
+            m="$d.oxcode-plugin/plugin.json"
+            if [ ! -f "$m" ]; then
+              echo "::error::$d has no .oxcode-plugin/plugin.json"; fail=1; continue
+            fi
+            python3 -c "import json,sys; json.load(open('$m'))" || { echo "::error::$m is not valid JSON"; fail=1; }
+          done
+          python3 -c "import json,sys; json.load(open('.oxcode-plugin/marketplace.json'))" \
+            || { echo "::error::marketplace.json is not valid JSON"; fail=1; }
+          exit $fail
+
+      # The manifest lists what exists, so a plugin nobody can find is a plugin
+      # nobody installs, and a listing that points at nothing is worse.
+      - name: Every plugin is listed, and every listing exists
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          mk = json.load(open('.oxcode-plugin/marketplace.json'))
+          listed = {p['name']: p['source'] for p in mk['plugins']}
+          on_disk = sorted(d for d in os.listdir('plugins') if os.path.isdir(f'plugins/{d}'))
+          fail = False
+          for d in on_disk:
+              if d not in listed:
+                  print(f"::error::plugins/{d} exists but is not in marketplace.json"); fail = True
+          for name, src in listed.items():
+              if not os.path.isdir(src):
+                  print(f"::error::marketplace.json lists {name} at {src}, which does not exist"); fail = True
+              elif not os.path.isdir(os.path.join(src, 'skills')):
+                  print(f"::error::{src} has no skills/ directory"); fail = True
+          sys.exit(1 if fail else 0)
+          PY
+
+      # A skill that will not parse cannot be merged. Two core keys, and a
+      # frontmatter block to carry them.
+      - name: Every SKILL.md has frontmatter with name and description
+        run: |
+          python3 - <<'PY'
+          import glob, sys
+          fail = False
+          for f in glob.glob('plugins/**/SKILL.md', recursive=True):
+              t = open(f, encoding='utf-8').read()
+              if not t.lstrip().startswith('---'):
+                  print(f"::error::{f} has no frontmatter block"); fail = True; continue
+              head = t.split('---', 2)[1]
+              for key in ('name:', 'description:'):
+                  if key not in head:
+                      print(f"::error::{f} frontmatter is missing {key}"); fail = True
+          sys.exit(1 if fail else 0)
+          PY
