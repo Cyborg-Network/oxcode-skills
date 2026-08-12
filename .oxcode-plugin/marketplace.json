@@ -8,17 +8,17 @@
   "plugins": [
     {
       "name": "code-review",
+      "source": "./plugins/code-review",
       "description": "Review a change for defects that would reach a user, with a reproducing input for every one.",
       "category": "development",
-      "author": "Oxlo.ai",
-      "source": "./skills/code-review"
+      "author": "Oxlo.ai"
     },
     {
       "name": "ui-review",
+      "source": "./plugins/ui-review",
       "description": "Review an interface for what a user would actually hit: contrast, focus, overflow, empty and error states.",
       "category": "design",
-      "author": "Oxlo.ai",
-      "source": "./skills/ui-review"
+      "author": "Oxlo.ai"
     }
   ]
 }

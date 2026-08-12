@@ -1,0 +1,13 @@
+{
+  "name": "ui-review",
+  "version": "1.0.0",
+  "description": "Review an interface for what a user would actually hit: contrast, focus, overflow, empty and error states.",
+  "author": {
+    "name": "Oxlo.ai"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Cyborg-Network/oxcode-skills",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}
