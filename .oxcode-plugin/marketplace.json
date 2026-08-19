@@ -19,6 +19,13 @@
       "description": "Review an interface for what a user would actually hit: contrast, focus, overflow, empty and error states.",
       "category": "design",
       "author": "Oxlo.ai"
+    },
+    {
+      "name": "triage",
+      "source": "./plugins/triage",
+      "description": "Turn logs into ranked hypotheses with distinguishing tests, without guessing root cause or treating correlation as cause.",
+      "category": "development",
+      "author": "Oxlo.ai"
     }
   ]
 }
