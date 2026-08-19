@@ -1,0 +1,13 @@
+{
+  "name": "test-hardening",
+  "version": "1.0.0",
+  "description": "Prove tests actually catch defects by mutating code and observing named failures.",
+  "author": {
+    "name": "Oxlo.ai"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Cyborg-Network/oxcode-skills",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}
