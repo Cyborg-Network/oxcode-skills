@@ -1,0 +1,13 @@
+{
+  "name": "triage",
+  "version": "1.0.0",
+  "description": "Turn logs into ranked hypotheses with distinguishing tests, without guessing root cause or treating correlation as cause.",
+  "author": {
+    "name": "Oxlo.ai"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Cyborg-Network/oxcode-skills",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}
