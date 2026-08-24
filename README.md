@@ -42,18 +42,19 @@ Drop a folder into `~/.oxcode/skills/` and OxCode picks it up when you save:
 ```
 
 That is the whole loop. No install, no manifest, no restart. Start from
-[`template/SKILL.md`](template/SKILL.md).
+[`template/SKILL.md`](template/SKILL.md) and read [`SKILL_STYLE.md`](SKILL_STYLE.md).
 
 ## What is in here
 
 | Skill | What it is for |
 |---|---|
-| [`code-review`](skills/code-review) | Review a change for defects that would reach a user, with a reproducing input for each |
-| [`ui-review`](skills/ui-review) | Review an interface for contrast, focus, overflow, and the states nobody designs |
+| [`code-review`](plugins/code-review) | Review a change for defects that would reach a user, with a reproducing input for each |
+| [`ui-review`](plugins/ui-review) | Review an interface for contrast, focus, overflow, and the states nobody designs |
+| [`triage`](plugins/triage) | Turn logs into ranked hypotheses with distinguishing tests without guessing |
 
 ## The format
 
-Two keys are required. Everything else has a default.
+Two keys are required. Everything else has a default. See [SKILL_STYLE.md](SKILL_STYLE.md) for full style conventions.
 
 ```yaml
 ---
@@ -91,7 +92,8 @@ What it does belongs in `description` and in the body.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). One pull request, one skill folder.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [SKILL_STYLE.md](SKILL_STYLE.md).
+One pull request, one plugin.
 
 ## Licence
 
