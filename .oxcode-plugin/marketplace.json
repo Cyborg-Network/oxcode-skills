@@ -26,6 +26,13 @@
       "description": "Turn logs into ranked hypotheses with distinguishing tests, without guessing root cause or treating correlation as cause.",
       "category": "development",
       "author": "Oxlo.ai"
+    },
+    {
+      "name": "test-hardening",
+      "source": "./plugins/test-hardening",
+      "description": "Prove tests actually catch defects by mutating code and observing named failures.",
+      "category": "development",
+      "author": "Oxlo.ai"
     }
   ]
 }

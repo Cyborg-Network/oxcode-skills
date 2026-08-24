@@ -51,6 +51,7 @@ That is the whole loop. No install, no manifest, no restart. Start from
 | [`code-review`](plugins/code-review) | Review a change for defects that would reach a user, with a reproducing input for each |
 | [`ui-review`](plugins/ui-review) | Review an interface for contrast, focus, overflow, and the states nobody designs |
 | [`triage`](plugins/triage) | Turn logs into ranked hypotheses with distinguishing tests without guessing |
+| [`test-hardening`](plugins/test-hardening) | Prove a test can fail before trusting it by mutating code and watching for named failures |
 
 ## The format
 
