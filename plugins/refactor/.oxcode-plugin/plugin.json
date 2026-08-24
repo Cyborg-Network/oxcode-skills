@@ -1,0 +1,13 @@
+{
+  "name": "refactor",
+  "version": "1.0.0",
+  "description": "Restructure code without changing behaviour, proven step by step against a test baseline.",
+  "author": {
+    "name": "Oxlo.ai"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Cyborg-Network/oxcode-skills",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}

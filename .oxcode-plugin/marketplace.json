@@ -33,6 +33,13 @@
       "description": "Prove tests actually catch defects by mutating code and observing named failures.",
       "category": "development",
       "author": "Oxlo.ai"
+    },
+    {
+      "name": "refactor",
+      "source": "./plugins/refactor",
+      "description": "Restructure code without changing behaviour, proven step by step against a test baseline.",
+      "category": "development",
+      "author": "Oxlo.ai"
     }
   ]
 }
