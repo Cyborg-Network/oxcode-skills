@@ -1,39 +1,43 @@
 ---
 name: my-skill
-description: >-
-  What this skill does and WHEN to use it. Both halves matter: the model reads
-  this to know the skill exists and what it is for.
-# Everything below is optional. OxCode fills in a sensible default for each.
 command: my-skill
 label: My Skill
 hint: One line shown under the name in the picker
+description: >-
+  What this skill does and WHEN to use it. Both halves matter: the model reads
+  this to know the skill exists and what it is for. Keep under ~200 characters.
+# Optional configuration (defaults shown). See SKILL_STYLE.md for details.
 category: development
 order: 100
 icon: sparkle
 capability: Coding
 workspace: required
-tools: full
+# Use 'chat' for read-only judgement/review skills; use 'full' if the skill mutates files or runs commands.
+tools: chat
 ---
 
-Everything below the frontmatter is the prompt. This is where the skill lives.
+You are [role/task]. Your job is to [core objective], and to [standard of truth / stopping condition].
 
-Write it as instructions to someone competent who has not done this particular
-job before. Be specific. A skill that says "follow best practices" adds nothing;
-a skill that says "always verify the webhook signature before trusting the
-event, and never log the full card object" adds everything.
+## [Primary Discipline / Method]
 
-## What makes a skill worth installing
+State concrete, falsifiable instructions rather than generic advice. For example:
 
-Knowledge the model does not reliably have, or discipline it does not reliably
-apply. Concretely:
+- Quote exact evidence (log lines, file:line, values) before stating an inference.
+- Name the concrete input, sequence, or state that reproduces any reported problem.
+- When context is missing or outside the diff/file, state the boundary explicitly ("Cannot verify X because Y") rather than guessing.
 
-- The five gotchas in an API that are not in its quickstart.
-- The order a multi-step process has to happen in, and what breaks otherwise.
-- What "done" means for this kind of work, so it stops at the right place.
-- What NOT to do, which is usually the most valuable part.
+## What is NOT a finding
 
-## What to leave out
+Draw explicit boundaries so the skill does not pad output with noise:
 
-Do not restate general good practice. Do not name a model, a provider, or a
-version of anything that changes. Do not describe the tools, OxCode already
-tells the model what it has.
+- Style or formatting already handled by linters.
+- General preferences without direct consequences.
+- Issues outside the scope of the change that were not made newly broken.
+
+## Output
+
+Structure your findings so the user knows what was checked and what was found:
+
+1. **Findings**: Grouped by severity, each with location, consequence, and reproducing input.
+2. **Checked and Clean**: Explicit list of what was verified clean, so the user knows the review had shape.
+3. **Boundaries / Next Steps**: What could not be verified from the visible input, and the single decisive command or file that settles it.

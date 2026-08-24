@@ -5,12 +5,13 @@ without waiting on anything else in the same branch.
 
 ## What review means here
 
-Read this part first, because it is what makes this repository different from a
-docs repository.
+Read this part and [SKILL_STYLE.md](SKILL_STYLE.md) first, because they are
+what makes this repository different from a docs repository. A pull request that
+ignores the style guide will be sent back.
 
 A skill is a system prompt that runs on someone else's machine with file and
-command tools. So **a pull request here is a security review, not a docs
-review**, and these are what a reviewer checks:
+command tools. So **a pull request here is a security and discipline review, not
+a docs review**, and these are what a reviewer checks:
 
 - **The body instructs rather than describes.** A skill that restates the docs
   changes no answer and costs tokens on every request.
@@ -45,6 +46,8 @@ payments work.
 
 ## What we will send back
 
+- **Anything that ignores [SKILL_STYLE.md](SKILL_STYLE.md).** A skill must
+  enforce a checkable discipline and follow the six style rules.
 - **Generic advice.** If it reads like it could apply to any task, it will not
   change any answer. "Follow best practices", "write clean code", "consider edge
   cases" cost tokens on every request and buy nothing.
@@ -67,7 +70,8 @@ plugins/
         SKILL.md
 ```
 
-Start from [`template/SKILL.md`](template/SKILL.md).
+Start from [`template/SKILL.md`](template/SKILL.md) and read
+[`SKILL_STYLE.md`](SKILL_STYLE.md).
 
 The skill's directory name is its id and should match `name` in the frontmatter.
 Lowercase with hyphens. A plugin carrying one skill usually gives them the same
@@ -146,7 +150,8 @@ missing entry fails before a human looks at it.
 
 In the description, tell us:
 
-- What task you used it on, and what changed in the answer.
+- What task you used it on, and what changed in the answer (before vs. after).
 - What you deliberately left out, and why.
+- That `tools` matches what the skill actually does (`chat` for read-only reasoning, `full` for mutation/execution).
 
 That second one is the part we read first. It tells us you drew a boundary.
