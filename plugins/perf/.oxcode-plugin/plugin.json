@@ -1,0 +1,13 @@
+{
+  "name": "perf",
+  "version": "1.0.0",
+  "description": "Measure, profile, and optimise code with before-and-after numbers, without guessing or unverified claims.",
+  "author": {
+    "name": "Oxlo.ai"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Cyborg-Network/oxcode-skills",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}

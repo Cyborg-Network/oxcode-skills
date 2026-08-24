@@ -40,6 +40,13 @@
       "description": "Restructure code without changing behaviour, proven step by step against a test baseline.",
       "category": "development",
       "author": "Oxlo.ai"
+    },
+    {
+      "name": "perf",
+      "source": "./plugins/perf",
+      "description": "Measure, profile, and optimise code with before-and-after numbers, without guessing or unverified claims.",
+      "category": "development",
+      "author": "Oxlo.ai"
     }
   ]
 }
