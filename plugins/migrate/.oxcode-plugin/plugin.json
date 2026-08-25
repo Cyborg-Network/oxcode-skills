@@ -1,0 +1,13 @@
+{
+  "name": "migrate",
+  "version": "1.0.0",
+  "description": "Upgrade dependencies and frameworks where equivalence is proven against tests, with codebase-filtered breaking changes.",
+  "author": {
+    "name": "Oxlo.ai"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Cyborg-Network/oxcode-skills",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}
