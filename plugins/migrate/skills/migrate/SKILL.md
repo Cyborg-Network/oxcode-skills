@@ -71,16 +71,19 @@ Equivalence must be proven by executing the test suite against both versions,
 never claimed or asserted. "This change is safe" is a banned assertion without
 test proof.
 
-1. **Establish the green baseline before touching code**:
-   - Run the existing test suite and type checker against the current codebase
-     before modifying any file.
-   - Record the exact test command executed, total tests run, and passing status.
-   - If any test fails before starting, **STOP**. Never start a migration on a
-     failing baseline. Report the failure and refuse to proceed until the baseline
-     is green or pre-existing defects are resolved.
+1. **Establish the baseline before touching code**:
+   - Record the baseline as a set, not a verdict. Run the suite and the type
+     checker before modifying any file, and record the exact command, the total,
+     and the NAMES of any tests already failing. A repository with pre-existing
+     failures is normal and is not a reason to refuse the migration. Equivalence
+     afterwards means the same named tests fail and no new ones do.
+   - **STOP** only when the baseline cannot be run at all, or when a test that
+     already fails covers the code being migrated. Say which test and why it
+     blocks, rather than refusing on a count.
 2. **Execute paired after-tests**:
    - Run the exact same test command under the updated version.
-   - Prove that all assertions pass and observable behaviour is preserved.
+   - Prove that observable behaviour is preserved: the same named tests fail and
+     no new ones do.
    - Report the before-and-after test counts and status side by side.
 3. **Handle missing test coverage**:
    - If a breaking API change affects code with no existing test coverage, write
@@ -98,8 +101,9 @@ use them rather than hand-editing what a dedicated tool does deterministically.
   - Python / Django: `django-upgrade`, `pyupgrade`, `libcst` codemods
   - Rust: `cargo fix --edition`, `cargo fix --allow-no-vcs`
   - Go: `go fix ./...`
-- **Inspect tool output**: State the exact command executed, inspect the diff
-  produced by the codemod, and run the test suite immediately after.
+- **Inspect tool output**: State the exact command executed, name the files the
+  codemod changed and the transformation applied to each, and run the test suite
+  immediately after.
 - Never hand-edit hundreds of lines of mechanical AST transformations when the
   framework authors provide a tested codemod.
 
@@ -129,19 +133,19 @@ instruction before making modifications.
 ## The migration sequence
 
 1. **Baseline**: Run test suite and type check on current code; record exact
-   command and passing count.
+   command, total count, and the names of any failing tests.
 2. **Version verification**: Run registry/package command to verify target
    version exists and can be installed.
 3. **Impact audit**: Grep codebase for breaking symbols and list only those that
    hit this codebase, with `file:line` citations.
 4. **Automated codemods**: Run ecosystem migration CLI or codemod if available;
-   verify diff and run tests.
+   state files changed and transformations applied, then run tests.
 5. **Mechanical edits**: Apply 1-to-1 deterministic changes; run tests after
    each edit.
 6. **Flag judgement calls**: Document any decision points with options and trade-offs;
    stop and await user decision.
 7. **Equivalence proof**: Run the full test suite and type checker; report paired
-   before-and-after proof.
+   before-and-after proof showing zero new regressions.
 
 ## Worked example
 
@@ -183,16 +187,18 @@ Consider upgrading `pydantic` from v1 to v2:
 
 Structure your migration report as follows:
 
-1. **Baseline Test Evidence**: Starting test command, passing test count, and
-   type check status.
+1. **Baseline Test Evidence**: Starting test command, total test count,
+   names of any pre-existing failing tests, and type check status.
 2. **Target Version Verification**: Exact command executed and target version
    verified.
 3. **Applicable Breaking Changes**: Filtered list of breaking changes affecting
    THIS codebase, with `file:line` references and brief description.
-4. **Tooling & Codemods**: Ecosystem migration commands run and files modified.
+4. **Tooling & Codemods**: Ecosystem migration commands run, files modified, and
+   transformations applied.
 5. **Mechanical Changes Applied**: Summary of 1-to-1 edits and intermediate test
    checks.
 6. **Judgement Calls / Decisions Required** (if any): Unresolved architectural
    choices, affected files, options with trade-offs, and stopping status.
 7. **Equivalence & Verification Evidence**: Paired test suite command, before
-   count vs. after count, and type checker results.
+   count vs. after count, regression status (confirming no new failing tests),
+   and type checker results.
