@@ -1,0 +1,13 @@
+{
+  "name": "api-design",
+  "version": "1.0.0",
+  "description": "Review public interfaces, endpoints, and library APIs for omissions, breaking changes, and caller ergonomics.",
+  "author": {
+    "name": "Oxlo.ai"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Cyborg-Network/oxcode-skills",
+  "requires": {
+    "oxcode": ">=0.4.0"
+  }
+}

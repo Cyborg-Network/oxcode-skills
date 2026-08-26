@@ -54,6 +54,13 @@
       "description": "Upgrade dependencies and frameworks where equivalence is proven against tests, with codebase-filtered breaking changes.",
       "category": "development",
       "author": "Oxlo.ai"
+    },
+    {
+      "name": "api-design",
+      "source": "./plugins/api-design",
+      "description": "Review public interfaces, endpoints, and library APIs for omissions, breaking changes, and caller ergonomics.",
+      "category": "development",
+      "author": "Oxlo.ai"
     }
   ]
 }
