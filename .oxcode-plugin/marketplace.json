@@ -47,6 +47,13 @@
       "description": "Measure, profile, and optimise code with before-and-after numbers, without guessing or unverified claims.",
       "category": "development",
       "author": "Oxlo.ai"
+    },
+    {
+      "name": "migrate",
+      "source": "./plugins/migrate",
+      "description": "Upgrade dependencies and frameworks where equivalence is proven against tests, with codebase-filtered breaking changes.",
+      "category": "development",
+      "author": "Oxlo.ai"
     }
   ]
 }
