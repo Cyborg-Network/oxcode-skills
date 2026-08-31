@@ -61,6 +61,13 @@
       "description": "Review public interfaces, endpoints, and library APIs for omissions, breaking changes, and caller ergonomics.",
       "category": "development",
       "author": "Oxlo.ai"
+    },
+    {
+      "name": "docs",
+      "source": "./plugins/docs",
+      "description": "Document what code actually does rather than what it was supposed to do, and report where code and docs disagree.",
+      "category": "development",
+      "author": "Oxlo.ai"
     }
   ]
 }
